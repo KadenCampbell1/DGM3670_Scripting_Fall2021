@@ -1,0 +1,36 @@
+select -all;
+doDelete;
+polyCube -w 1 -h 1 -d 1 -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+select -r pCube1.f[1] ;
+scale -r -p 0cm 0.5cm 0cm 1.780178 1 1 ;
+select -r pCube1.f[3] ;
+scale -r -p 0cm -0.5cm 0cm 1 1 0.479833 ;
+polySphere -r 0.7 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 1 0.5 0 ;
+duplicate -rr;
+move -r -2 0 0 ;
+polyCylinder -r 0.25 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r 1 0 0 ;
+duplicate -rr;
+move -r -2 0 0;
+polyCube -w 0.25 -h 0.75 -d 0.25;
+polyCube -w 0.5 -h 0.5 -d 0.5;
+select -r pCube2;
+move -r 0 -0.5 0;
+select -r pCube3;
+move -r 0 -1 0;
+select -r pSphere1;
+duplicate -rr;
+scale -r -p 1cm 0.5cm 0cm -scaleXYZ -0.6 -0.6 -0.6;
+move -r 0 -1.5 0;
+duplicate -rr;
+move -r -2 0 0;
+select -r pSphere1 pCylinder1 pSphere3
+editMenuUpdate("MayaWindow|mainEditMenu");
+Group;
+performGroup false;
+doGroup 0 1 1;
+import ufe; len(ufe.GlobalSelection.get())
+
+
+file -save;
