@@ -1,0 +1,26 @@
+string $objs[];
+string $temp[];
+
+select -all;
+doDelete;
+
+// Hat[3] //
+$temp = `polyCylinder -radius 0.8 -height 0.25 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[3] = $temp[0];
+move -relative 0 4.4 0 $objs[3];
+polyExtrudeFacet -ls -.5 -.5 -0.5;
+
+
+// Head[0] //
+$temp = `polySphere -radius 0.8 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[0] = $temp[0];
+move -relative 0 3.75 0 $objs[0];
+
+// Torso[1] //
+$temp = `polySphere -radius 1.2 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[1] = $temp[0];
+move -relative 0 2 0 $objs[1];
+
+// Body[2] //
+$temp = `polySphere -radius 1.5 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[2] = $temp[0];
