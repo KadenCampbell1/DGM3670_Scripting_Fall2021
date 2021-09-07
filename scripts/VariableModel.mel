@@ -1,8 +1,8 @@
 string $objs[];
 string $temp[];
-
-select -all;
-doDelete;
+string $snowObj[];
+string $snowman;
+string $geo;
 
 // Hat[3] //
 $temp = `polyCylinder -radius 0.8 -height 0.25 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
@@ -51,17 +51,51 @@ $temp = `polySphere -radius 1.2 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 
 $objs[1] = $temp[0];
 move -relative 0 2 0 $objs[1];
 
+// Buttons[14:16] //
+$temp = `polyCylinder -radius 0.2 -height 0.05 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 0 1 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[14] = $temp[0];
+move -relative 0 2 1.2 $objs[14];
+$temp = `polyCylinder -radius 0.2 -height 0.05 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 0 1 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[15] = $temp[0];
+move -relative 0 2.75 0.95 $objs[15];
+rotate -relative -objectSpace -forceOrderXYZ -35 0 0 $objs[15];
+
+$temp = `polyCylinder -radius 0.2 -height 0.05 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 0 1 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[16] = $temp[0];
+move -relative 0 1.25 0.95 $objs[16];
+rotate -relative -objectSpace -forceOrderXYZ 35 0 0 $objs[16];
+
+
 // Body[2] //
 $temp = `polySphere -radius 1.5 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
 $objs[2] = $temp[0];
 
 // Arms[12:13] //
-$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 5 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 6 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
 $objs[12] = $temp[0];
-$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 5 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 6 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
 $objs[13] = $temp[0];
 move -relative -2 3.5 0 $objs[12];
 rotate -relative -objectSpace -forceOrderXYZ 0 0 45 $objs[12];
+move -relative -0.25 -0.25 0. ($objs[12]+".e[6:11]");
+polyExtrudeFacet -kft false -translate -0.75 0.75 0 -ls .5 .5 0 ($objs[12]+".f[18]") ($objs[12]+".f[20]") ($objs[12]+".f[22]");
+move -relative 0.25 0 0.25 ($objs[12]+".f[22]");
+move -relative -0.25 0.25 0.25 ($objs[12]+".f[20]");
+move -relative 0.25 0.25 -0.25 ($objs[12]+".f[18]");
 
+move -relative 2 3.5 0 $objs[13];
+rotate -relative -objectSpace -forceOrderXYZ 0 0 -45 $objs[13];
+move -relative 0.25 -0.25 0. ($objs[13]+".e[6:11]");
+polyExtrudeFacet -kft false -translate 0.75 0.75 0 -ls .5 .5 0 ($objs[13]+".f[18]") ($objs[13]+".f[20]") ($objs[13]+".f[22]");
+move -relative 0.25 0 0.25 ($objs[13]+".f[22]");
+move -relative 0.25 0.25 0.25 ($objs[13]+".f[20]");
+move -relative 0.25 0.25 -0.25 ($objs[13]+".f[18]");
+
+// Group, Combine  & Rename //
+$snowObj = `polyUnite $objs`;
+delete -constructionHistory;
+$snowman = `rename $snowObj[0] Snowman`;
+$geo = `group -empty -name "Geo"`;
+parent $snowman $geo;
 
 file -save;
