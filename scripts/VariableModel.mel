@@ -16,6 +16,36 @@ $temp = `polySphere -radius 0.8 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 
 $objs[0] = $temp[0];
 move -relative 0 3.75 0 $objs[0];
 
+// Eyes[4 & 5] //
+$temp = `polySphere -radius 0.1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[4] = $temp[0];
+$temp = `polySphere -radius 0.1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[5] = $temp[0];
+move -relative -0.25 3.85 0.75 $objs[4];
+move -relative 0.25 3.85 0.75 $objs[5];
+
+// Nose[6] //
+$temp = `polyCone -radius 0.25 -height 0.75 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 0 1 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[6] = $temp[0];
+move -relative 0 3.75 0.75 $objs[6];
+
+// Mouth [7:12] //
+$temp = `polySphere -radius 0.05 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[7] = $temp[0];
+$temp = `polySphere -radius 0.05 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[8] = $temp[0];
+$temp = `polySphere -radius 0.05 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[9] = $temp[0];
+$temp = `polySphere -radius 0.05 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[10] = $temp[0];
+$temp = `polySphere -radius 0.05 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
+$objs[11] = $temp[0];
+move -relative 0.4 3.5 0.75 $objs[7];
+move -relative -0.4 3.5 0.75 $objs[8];
+move -relative 0.2 3.4 0.75 $objs[9];
+move -relative -0.2 3.4 0.75 $objs[10];
+move -relative 0 3.35 0.75 $objs[11];
+
 // Torso[1] //
 $temp = `polySphere -radius 1.2 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
 $objs[1] = $temp[0];
@@ -24,5 +54,14 @@ move -relative 0 2 0 $objs[1];
 // Body[2] //
 $temp = `polySphere -radius 1.5 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1`;
 $objs[2] = $temp[0];
+
+// Arms[12:13] //
+$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 5 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[12] = $temp[0];
+$temp = `polyCylinder -radius 0.1 -height 3.5 -subdivisionsX 5 -subdivisionsY 2 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1`;
+$objs[13] = $temp[0];
+move -relative -2 3.5 0 $objs[12];
+rotate -relative -objectSpace -forceOrderXYZ 0 0 45 $objs[12];
+
 
 file -save;
