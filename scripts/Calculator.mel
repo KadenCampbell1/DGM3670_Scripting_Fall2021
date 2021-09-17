@@ -71,15 +71,15 @@ global proc float Median(float $numbers[])
     return $result;
 }
 
-global proc float Mode(float $numbers[])
+global proc float[] Mode(float $numbers[])
 {
-    float $result = 0;
     float $mode = 0;
-    float $count = 0;
+    float $count = 1;
     float $contestant = 0;
     int $i = 0;
     while($i<size($numbers))
     {
+        $contestant = 0;
         for($index=0; $index<size($numbers); $index++)
         {
             if($numbers[$i] == $numbers[$index])
@@ -90,8 +90,16 @@ global proc float Mode(float $numbers[])
         if($contestant > $count)
         {
             $mode = $numbers[$i];
+            $count = $contestant;
         }
         $i++;
     }
-    return $result;
+    if($count <= 1)
+    {
+        $mode = 0;
+    }
+    return {$mode};
 }
+
+Mode({5,4,4,3,3,2,1});
+
