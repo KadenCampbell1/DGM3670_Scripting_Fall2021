@@ -50,7 +50,7 @@ global proc float Power(float $constant, float $exponent)
 
 global proc float Mean(float $numbers[])
 {
-    float $result = Add($numbers)/2;
+    float $result = Add($numbers)/size($numbers);
     return $result;
 }
 
@@ -74,8 +74,13 @@ global proc float Median(float $numbers[])
 global proc float[] Mode(float $numbers[])
 {
     float $mode = 0;
+    float $mode_array[];
+    float $mode_result[];
     float $count = 1;
     float $contestant = 0;
+    float $array_contestant_amount = 0;
+    float $num;
+    float $start_num;
     int $i = 0;
     while($i<size($numbers))
     {
@@ -87,19 +92,31 @@ global proc float[] Mode(float $numbers[])
                 $contestant++;
             }
         }
-        if($contestant > $count)
+        if($contestant >= $count)
         {
+            if($array_contestant_amount != $contestant)
+            {
+                clear $mode_array;
+            }
             $mode = $numbers[$i];
+            $array_contestant_amount = $contestant;
+            floatArrayInsertAtIndex(size($mode_array)+1, $mode_array, $mode);
             $count = $contestant;
         }
         $i++;
     }
-    if($count <= 1)
+    $start_num = -$mode_array[0];
+    for($index=0; $index<size($mode_array); $index++)
     {
-        $mode = 0;
+        $num = $mode_array[$index];
+        if($start_num != $num)
+        {
+            floatArrayInsertAtIndex(0, $mode_result, $num);
+            $start_num = $num;
+        }
     }
-    return {$mode};
+    return `sort $mode_result`;
 }
 
-Mode({5,4,4,3,3,2,1});
+Mode({5,5,5,4,3,3,3,3,2,2,2,2,1});
 
