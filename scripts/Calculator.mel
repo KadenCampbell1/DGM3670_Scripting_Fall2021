@@ -65,7 +65,6 @@ global proc float Median(float $numbers[])
     else
     {
         int $value = size($numbers)/2;
-        print($value);
         $result = Division({Add({$numbers[$value],$numbers[$value-1]}),2});
     }
     return $result;
@@ -106,6 +105,7 @@ global proc float[] Mode(float $numbers[])
         $i++;
     }
     $start_num = -$mode_array[0];
+    $mode_array = `sort $mode_array`;
     for($index=0; $index<size($mode_array); $index++)
     {
         $num = $mode_array[$index];
@@ -118,5 +118,58 @@ global proc float[] Mode(float $numbers[])
     return `sort $mode_result`;
 }
 
-Mode({5,5,5,4,3,3,3,3,2,2,2,2,1});
+global proc string Calculator(float $numbers[], string $method)
+{
+    string $result;
+    
+    if($method == "+")
+    {
+        $result = floatArrayToString($numbers, " + ") + " = " + Add($numbers);
+    }
+    
+    else if($method == "-")
+    {
+        $result = floatArrayToString($numbers, " - ") + " = " + Difference($numbers);
+    }
+    
+    else if($method == "*")
+    {
+        $result = floatArrayToString($numbers, " * ") + " = " + Multiplication($numbers);
+    }
+    
+    else if($method == "/")
+    {
+        $result = floatArrayToString($numbers, " / ") + " = " + Division($numbers);
+    }
+    
+    else if($method == "Power")
+    {
+        $result = floatArrayToString($numbers, " ^ ") + " = " + Power($numbers[0], $numbers[1]);
+    }
+    
+    else if($method == "Mean")
+    {
+        $result = "The Mean of " + (floatArrayToString($numbers, ", ")) + " = " + Mean($numbers);
+    }
+    
+    else if($method == "Median")
+    {
+        $result = "The Median of " + (floatArrayToString($numbers, ", ")) + " = " + Median($numbers);
+    }
+    
+    else if($method == "Mode")
+    {
+        float $mode[];
+        $mode = `Mode($numbers)`;
+        $result = "The Mode of " + (floatArrayToString($numbers, ", ")) + " = " + floatArrayToString($mode, ", ");
+    }
+    
+    else
+    {
+        $result = "Wrong input, needs an array and operator.\n" + "Operations: +, -, *, /, Power, Mean, Median, Mode";
+    }
+    
+    return $result;
+}
 
+Calculator({1,2,3,1,2,2,3,4,1}, "Mode");
