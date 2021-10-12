@@ -1,0 +1,119 @@
+/*Generates duplicates of selected objects.
+
+RandomGenerator() duplicates selected objects in the scene X amount of times 
+and moves each duplicate to a random location relative to its selected object.
+Returns string of Random_Generator_Grp name.
+
+Keyword Arguments:
+
+$objFreq - type int
+$minX_translate - type float
+$minY_translate - type float
+$minZ_translate - type float
+$maxX_translate - type float
+$maxY_translate - type float
+$maxZ_translate - type float
+*/
+global proc string RandomGenerator(int $objFreq, \
+    float $minX_translate, float $minY_translate, float $minZ_translate, \
+    float $maxX_translate, float $maxY_translate, float $maxZ_translate, \
+    float $minX_rotate, float $minY_rotate, float $minZ_rotate, \
+    float $maxX_rotate, float $maxY_rotate, float $maxZ_rotate, \
+    float $minX_scale, float $minY_scale, float $minZ_scale, \
+    float $maxX_scale, float $maxY_scale, float $maxZ_scale)
+{
+    /*Uses selected objects to duplicate and move reletive to selected objecct X times.
+    
+    Returns string of Random_Generator_Grp name.
+    
+    Keyword Arguments:
+    
+    $objFreq - Number of times selected objects are duplicated
+    $minX_translate - minimum range for X translation
+    $minY_translate - minimum range for Y translation
+    $minZ_translate - minimum range for Z translation
+    $maxX_translate - maximum range for X translation
+    $maxY_translate - maximum range for Y translation
+    $maxZ_translate - maximum range for Z translation
+    */
+    string $objs[];
+    string $result[];
+    string $instance;
+    string $instanceGRPs[];
+    string $randomGen;
+
+    $objs = `ls -sl`;
+    
+    // Duplication iteration //
+    int $j = 0;
+    while($j<$objFreq)
+    {
+        string $grp[];
+        // Object iteration //
+        int $i = 0;
+        while($i<size($objs))
+        {
+            string $name;
+            string $dup[] = `duplicate $objs[$i]`;
+            
+            // Translation //
+            float $xTranslate = rand($minX_translate, $maxX_translate);
+            float $yTranslate = rand($minY_translate, $maxY_translate);
+            float $zTranslate = rand($minZ_translate, $maxZ_translate);
+            
+            move -relative $xTranslate $yTranslate $zTranslate $dup;
+            
+            // Rotation //
+            float $xRotate = rand($minX_rotate, $maxX_rotate);
+            float $yRotate = rand($minY_rotate, $maxY_rotate);
+            float $zRotate = rand($minZ_rotate, $maxZ_rotate);
+            
+            rotate -relative $xRotate $yRotate $zRotate $dup;
+            
+            // Scale //
+            float $xScale = rand($minX_scale, $maxX_scale);
+            float $yScale = rand($minY_scale, $maxY_scale);
+            float $zScale = rand($minZ_scale, $maxZ_scale);
+            
+            scale -relative $xScale $yScale $zScale $dup;
+            
+            // deletes history of duplicate and adds to 
+            delete -constructionHistory $dup;
+            
+            $name = $dup[0];
+            $grp[$i] = $name;
+            
+            $i++;
+        }
+        
+        // $grp iteration to parent each to $instance //
+        $instance = `group -empty -name "Instance_Grp"`;
+        $instanceGRPs[$j] = $instance;
+        for($item = 0; $item < size($grp); $item++)
+        {
+            parent $grp[$item] $instance;
+        } 
+        
+        $j++;
+    }
+    
+    // SinstanceGRPs iteration to parent to Rangom_Generator_Grp //
+    $randomGen = `group -empty -name "Random_Generator_Grp"`;
+    for($freq = 0; $freq < size($instanceGRPs); $freq++)
+    {
+        parent $instanceGRPs[$freq] $randomGen;
+    }
+
+    // Returns string of Random_Generator_Grp name //
+    return $randomGen;
+}
+
+// Saves group name into $sel and selects latest generation //
+string $sel = RandomGenerator($objFreq=3, \
+    $minX_translate=-5, $minY_translate=-5, $minZ_translate=-5, \
+    $maxX_translate=5, $maxY_translate=5, $maxZ_translate=5, \
+    $minX_rotate=-5, $minY_rotate=-5, $minZ_rotate=-5, \
+    $maxX_rotate=5, $maxY_rotate=5, $maxZ_rotate=5, \
+    $minX_scale=-5, $minY_scale=-5, $minZ_scale=-5, \
+    $maxX_scale=5, $maxY_scale=5, $maxZ_scale=5);
+$sel = `select -r $sel`;
