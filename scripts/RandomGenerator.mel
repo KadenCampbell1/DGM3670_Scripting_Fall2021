@@ -13,14 +13,21 @@ $minZ_translate - type float
 $maxX_translate - type float
 $maxY_translate - type float
 $maxZ_translate - type float
+$minX_rotate - type float
+$minY_rotate - type float
+$minZ_rotate - type float
+$maxX_rotate - type float
+$maxY_rotate - type float
+$maxZ_rotate - type float
+$minX_scale - type float
+$minY_scale - type float
+$minZ_scale - type float
+$maxX_scale - type float
+$maxY_scale - type float
+$maxZ_scale - type float
+$uniformScale - type int
 */
-global proc string RandomGenerator(int $objFreq, \
-    float $minX_translate, float $minY_translate, float $minZ_translate, \
-    float $maxX_translate, float $maxY_translate, float $maxZ_translate, \
-    float $minX_rotate, float $minY_rotate, float $minZ_rotate, \
-    float $maxX_rotate, float $maxY_rotate, float $maxZ_rotate, \
-    float $minX_scale, float $minY_scale, float $minZ_scale, \
-    float $maxX_scale, float $maxY_scale, float $maxZ_scale)
+global proc string RandomGenerator(int $objFreq,float $minX_translate, float $minY_translate, float $minZ_translate, float $maxX_translate, float $maxY_translate, float $maxZ_translate, float $minX_rotate, float $minY_rotate, float $minZ_rotate, float $maxX_rotate, float $maxY_rotate, float $maxZ_rotate, float $minX_scale, float $minY_scale, float $minZ_scale, float $maxX_scale, float $maxY_scale, float $maxZ_scale, int $uniformScale)
 {
     /*Uses selected objects to duplicate and move reletive to selected objecct X times.
     
@@ -35,6 +42,19 @@ global proc string RandomGenerator(int $objFreq, \
     $maxX_translate - maximum range for X translation
     $maxY_translate - maximum range for Y translation
     $maxZ_translate - maximum range for Z translation
+    $minX_rotate - minimum range for X rotation
+    $minY_rotate - minimum range for Y rotation
+    $minZ_rotate - minimum range for Z rotation
+    $maxX_rotate - maximum range for X rotation
+    $maxY_rotate - maximum range for Y rotation
+    $maxZ_rotate - maximum range for Z rotation
+    $minX_scale - minimum range for X scale
+    $minY_scale - minimum range for Y scale
+    $minZ_scale - minimum range for Z scale
+    $maxX_scale - maximum range for X scale
+    $maxY_scale - maximum range for Y scale
+    $maxZ_scale - maximum range for Z scale
+    $uniformScale - (true/false) 1/0 to use minX and maxX for scale ranges
     */
     string $objs[];
     string $result[];
@@ -71,11 +91,21 @@ global proc string RandomGenerator(int $objFreq, \
             rotate -relative $xRotate $yRotate $zRotate $dup;
             
             // Scale //
-            float $xScale = rand($minX_scale, $maxX_scale);
-            float $yScale = rand($minY_scale, $maxY_scale);
-            float $zScale = rand($minZ_scale, $maxZ_scale);
             
-            scale -relative $xScale $yScale $zScale $dup;
+            if($uniformScale == true)
+            {
+                float $scale = rand($minX_scale, $maxX_scale);
+                
+                scale -relative $scale $scale $scale $dup;
+            }
+            else
+            {
+                float $xScale = rand($minX_scale, $maxX_scale);
+                float $yScale = rand($minY_scale, $maxY_scale);
+                float $zScale = rand($minZ_scale, $maxZ_scale);
+                
+                scale -relative $xScale $yScale $zScale $dup;
+            }
             
             // deletes history of duplicate and adds to 
             delete -constructionHistory $dup;
@@ -109,11 +139,5 @@ global proc string RandomGenerator(int $objFreq, \
 }
 
 // Saves group name into $sel and selects latest generation //
-string $sel = RandomGenerator($objFreq=3, \
-    $minX_translate=-5, $minY_translate=-5, $minZ_translate=-5, \
-    $maxX_translate=5, $maxY_translate=5, $maxZ_translate=5, \
-    $minX_rotate=-5, $minY_rotate=-5, $minZ_rotate=-5, \
-    $maxX_rotate=5, $maxY_rotate=5, $maxZ_rotate=5, \
-    $minX_scale=-5, $minY_scale=-5, $minZ_scale=-5, \
-    $maxX_scale=5, $maxY_scale=5, $maxZ_scale=5);
+string $sel = RandomGenerator($objFreq=3, $minX_translate=-5, $minY_translate=-5, $minZ_translate=-5, $maxX_translate=5, $maxY_translate=5, $maxZ_translate=5, $minX_rotate=-360, $minY_rotate=-360, $minZ_rotate=-360, $maxX_rotate=360, $maxY_rotate=360, $maxZ_rotate=360, $minX_scale=0.5, $minY_scale=0.5, $minZ_scale=0.5, $maxX_scale=5, $maxY_scale=5, $maxZ_scale=5, $uniformScale=true);
 $sel = `select -r $sel`;
