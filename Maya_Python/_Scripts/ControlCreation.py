@@ -1,4 +1,15 @@
+"""Control Creation creates a circle at a location and orientation based upon selection.
+
+Function receives a string "Red" or int and changes the circle's color to indicated color.
+importing a copy of CreateNullParent from 'C:\Users\Xmen9\Documents\maya\scripts'
+
+Functions:
+color_picker(sels, color) -- Overrides the color of selected shape nodes
+create_control(color) -- Creates circle control with selected object(s) orientation, location, and name
+"""
+
 import maya.cmds as cmds
+from CreateNullParent import create_null_parent
 
 
 def color_picker(sels=None, color="Red"):
@@ -66,6 +77,7 @@ def create_control(color):
     name = None
     location = None
     temp_lyst = []
+    parent_lyst = []
 
     if not sels:
         # with no selection a control will be created at the origin named Root_Ctrl
@@ -73,6 +85,7 @@ def create_control(color):
         location = (0, 0, 0)
         curve = cmds.circle(c=location, n=name, normal=(0, 1, 0))
         temp_lyst.append(curve)
+        parent_lyst.append(curve[0])
 
     for sel in sels:
         # runs through sels appending _Ctrl to the name of sel
@@ -88,12 +101,21 @@ def create_control(color):
         orientation = cmds.xform(sel, q=True, rotation=True, worldSpace=True)
 
         # creates curve at location with proper name
-        curve = cmds.circle(c=location, n=name)
-        # rotates curve with orientation values with a centerPivot
-        cmds.rotate(orientation[0], orientation[1], orientation[2], curve, centerPivot=True)
+        curve = cmds.circle(n=name)
+        # places pivot at center point then rotates curve with orientation values
+        cmds.xform(curve, centerPivots=True)
+        cmds.xform(curve, rotation=orientation)
+        cmds.xform(curve, translation=location)
 
         # appends curve to a temp_lyst for use in color_picker()
         temp_lyst.append(curve)
+        # appends curve to a parent_lyst for use in create_null_parent()
+        parent_lyst.append(curve[0])
 
     # calls color_picker with input color
     color_picker(temp_lyst, color)
+    # calls create_null_parent with parent_lyst
+    create_null_parent(parent_lyst)
+
+
+create_control(color="Yellow")
