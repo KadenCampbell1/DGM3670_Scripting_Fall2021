@@ -1,10 +1,10 @@
-"""Sequential Renamer based upon selection order renames objects sequentially.
-
-Function receives a string "Name_##_Type" and replaces "#" with the same number of digits.
-
-Functions:
-rename(name) -- renames selected items to name in sequential order
-"""
+# """Sequential Renamer based upon selection order renames objects sequentially.
+#
+# Function receives a string "Name_##_Type" and replaces "#" with the same number of digits.
+#
+# Functions:
+# rename(name) -- renames selected items to name in sequential order
+# """
 
 import maya.cmds as cmds
 

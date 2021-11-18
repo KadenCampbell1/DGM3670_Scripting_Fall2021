@@ -1,10 +1,10 @@
-"""Create Null Parent creates a Null at a location and orientation based upon selection and parents selection to Null.
-
-Function receives a selection list.
-
-Functions:
-create_null_parent(sels) -- creates a null object with selected object(s) orientation, location, and name
-"""
+# """Create Null Parent creates a Null at a location and orientation based upon selection and parents selection to Null.
+#
+# Function receives a selection list.
+#
+# Functions:
+# create_null_parent(sels) -- creates a null object with selected object(s) orientation, location, and name
+# """
 
 import maya.cmds as cmds
 

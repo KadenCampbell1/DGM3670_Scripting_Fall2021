@@ -1,12 +1,13 @@
-"""Control Creation creates a circle at a location and orientation based upon selection.
-
-Function receives a string "Red" or int and changes the circle's color to indicated color.
-importing a copy of CreateNullParent from 'C:\Users\Xmen9\Documents\maya\scripts'
-
-Functions:
-color_picker(sels, color) -- Overrides the color of selected shape nodes
-create_control(color) -- Creates circle control with selected object(s) orientation, location, and name
-"""
+# """Control Creation creates a circle at a location and orientation based upon selection.
+#
+# Function receives a string "Red" or int and changes the circle's color to indicated color.
+# importing a copy of CreateNullParent from 'C:\Users\Xmen9\Documents\maya\scripts'
+#
+# Functions:
+# color_picker(sels, color) -- Overrides the color of selected shape nodes
+# create_null_parent(sels) -- creates a null object with selected object(s) orientation, location, and name
+# create_control(color) -- Creates circle control with selected object(s) orientation, location, and name
+# """
 
 import maya.cmds as cmds
 from CreateNullParent import create_null_parent
@@ -118,4 +119,4 @@ def create_control(color):
     create_null_parent(parent_lyst)
 
 
-create_control(color="Yellow")
+create_control("Green")
