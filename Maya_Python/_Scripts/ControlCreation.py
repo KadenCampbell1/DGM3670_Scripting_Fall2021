@@ -10,7 +10,7 @@
 # """
 
 import maya.cmds as cmds
-from CreateNullParent import create_null_parent
+# from CreateNullParent import create_null_parent
 
 
 def color_picker(sels=None, color="Red"):
@@ -59,6 +59,51 @@ def color_picker(sels=None, color="Red"):
         sel = cmds.listRelatives(sel, children=True)
         cmds.setAttr(f"{sel[0]}.overrideEnabled", 1)
         cmds.setAttr(f"{sel[0]}.overrideColor", color)
+
+
+def create_null_parent(sels=None):
+    """creates a null object with selected object(s) orientation, location, and name
+
+    Null object created at each selected objects position and orientation.
+    Null object will then be renamed with appended suffix _Grp. If there is no
+    selection a default name ending in _Grp will be used.
+
+    arguments:
+    sels -- type list
+    """
+
+    if not sels:
+        # sets sels to selection
+        # allows create_null_parent() to run independently
+        sels = cmds.ls(sl=True)
+
+    name = None
+    location = None
+    temp_lyst = []
+
+    if not sels:
+        # with no selection a null object will be created at the origin named Root_Grp
+        name = "Root_Grp"
+        null_object = cmds.group(empty=True, name=name)
+        temp_lyst.append(null_object)
+
+    for sel in sels:
+        # runs through sels appending _Grp to the name of sel
+        name = f"{sel}_Grp"
+
+        # queries location and orientation of each sel assigning values to variables name respectively
+        location = cmds.xform(sel, q=True, translation=True, worldSpace=True)
+        orientation = cmds.xform(sel, q=True, rotation=True, worldSpace=True)
+
+        # creates null object with proper name
+        null_object = cmds.group(empty=True, name=name)
+        # rotates and transforms null object with orientation and location values
+        cmds.xform(null_object, centerPivots=True)
+        cmds.xform(null_object, rotation=orientation)
+        cmds.xform(null_object, translation=location)
+
+        # places sel in child relation to null object
+        cmds.parent(sel, null_object)
 
 
 def create_control(color):
@@ -119,4 +164,45 @@ def create_control(color):
     create_null_parent(parent_lyst)
 
 
-create_control("Green")
+def create_window():
+    window = cmds.window(title="Control Creation", widthHeight=(500, 500))
+    m_column = cmds.columnLayout(columnAttach=('both', 5), rowSpacing=10, columnWidth=500, parent=window)
+    cmds.text(label='', font="boldLabelFont", align='center', parent=m_column)
+    cmds.text(label='Color Picker', font="boldLabelFont", align='center', parent=m_column)
+    color_column = cmds.rowColumnLayout(numberOfRows=4, parent=m_column)
+    cmds.button(label='None', command=lambda x: color_picker(0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(1), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(2), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(3), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(4), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(5), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(6), backgroundColor=(0,0,0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(7), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(8), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(9), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(10), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(11), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(12), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(13), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(14), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(15), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(16), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(17), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(18), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(19), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(20), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(21), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(22), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(23), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(24), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(25), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(26), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(27), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(28), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(29), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(30), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.button(label='Black', command=lambda x: color_picker(31), backgroundColor=(0, 0, 0), parent=color_column)
+    cmds.showWindow(window)
+
+
+create_window()
