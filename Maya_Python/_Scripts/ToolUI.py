@@ -1,10 +1,6 @@
-import importlib
 import maya.cmds as cmds
 import ColorPicker as cp
 import CreateControl as cc
-importlib.reload(cp)
-importlib.reload(cc)
-
 
 class ToolUI:
     def __init__(self):
@@ -34,132 +30,138 @@ class ToolUI:
                                        columnsResizable=True, autoGrow=True)
 
         cmds.button(label='None',
-                    command=lambda x: cp.color_picker(color=0),
+                    command=lambda x: self.button_cmd(c=0),
                     parent=color_column)
         cmds.button(label='D_Red',
-                    command=lambda x: cp.color_picker(color=1),
+                    command=lambda x: self.button_cmd(c=1),
                     backgroundColor=(0.5, 0, 0),
                     parent=color_column)
         cmds.button(label='Grey',
-                    command=lambda x: cp.color_picker(color=2),
+                    command=lambda x: self.button_cmd(c=2),
                     backgroundColor=(0.7, 0.7, 0.7),
                     parent=color_column)
         cmds.button(label='D_White',
-                    command=lambda x: cp.color_picker(color=3),
+                    command=lambda x: self.button_cmd(c=3),
                     backgroundColor=(0.9, 0.9, 0.9),
                     parent=color_column)
         cmds.button(label='Red',
-                    command=lambda x: cp.color_picker(color=4),
+                    command=lambda x: self.button_cmd(c=4),
                     backgroundColor=(0.7, 0, 0),
                     parent=color_column)
         cmds.button(label='D_Blue',
-                    command=lambda x: cp.color_picker(color=5),
+                    command=lambda x: self.button_cmd(c=5),
                     backgroundColor=(0, 0, 0.5),
                     parent=color_column)
         cmds.button(label='L_Blue',
-                    command=lambda x: cp.color_picker(color=6),
+                    command=lambda x: self.button_cmd(c=6),
                     backgroundColor=(0, 0, 1),
                     parent=color_column)
         cmds.button(label='D_Green',
-                    command=lambda x: cp.color_picker(color=7),
+                    command=lambda x: self.button_cmd(c=7),
                     backgroundColor=(0, 0.5, 0),
                     parent=color_column)
         cmds.button(label='D_Grey',
-                    command=lambda x: cp.color_picker(color=8),
+                    command=lambda x: self.button_cmd(c=8),
                     backgroundColor=(0.1, 0.1, 0.1),
                     parent=color_column)
         cmds.button(label='Pink',
-                    command=lambda x: cp.color_picker(color=9),
+                    command=lambda x: self.button_cmd(c=9),
                     backgroundColor=(1, 0.5, 0.9),
                     parent=color_column)
         cmds.button(label='Orange',
-                    command=lambda x: cp.color_picker(color=10),
+                    command=lambda x: self.button_cmd(c=10),
                     backgroundColor=(1, 0.7, 0.2),
                     parent=color_column)
         cmds.button(label='D_Grey',
-                    command=lambda x: cp.color_picker(color=11),
+                    command=lambda x: self.button_cmd(c=11),
                     backgroundColor=(0.4, 0.4, 0.4),
                     parent=color_column)
         cmds.button(label='D_Orange',
-                    command=lambda x: cp.color_picker(color=12),
+                    command=lambda x: self.button_cmd(c=12),
                     backgroundColor=(1, 0.5, 0),
                     parent=color_column)
         cmds.button(label='B_Red',
-                    command=lambda x: cp.color_picker(color=13),
+                    command=lambda x: self.button_cmd(c=13),
                     backgroundColor=(1, 0, 0),
                     parent=color_column)
         cmds.button(label='B_Green',
-                    command=lambda x: cp.color_picker(color=14),
+                    command=lambda x: self.button_cmd(c=14),
                     backgroundColor=(0, 1, 0),
                     parent=color_column)
         cmds.button(label='Blue',
-                    command=lambda x: cp.color_picker(color=15),
+                    command=lambda x: self.button_cmd(c=15),
                     backgroundColor=(0, 0, 0.7),
                     parent=color_column)
         cmds.button(label='White',
-                    command=lambda x: cp.color_picker(color=16),
+                    command=lambda x: self.button_cmd(c=16),
                     backgroundColor=(1, 1, 1),
                     parent=color_column)
         cmds.button(label='Yellow',
-                    command=lambda x: cp.color_picker(color=17),
+                    command=lambda x: self.button_cmd(c=17),
                     backgroundColor=(1, 0.8, 0.2),
                     parent=color_column)
         cmds.button(label='Sky Blue',
-                    command=lambda x: cp.color_picker(color=18),
+                    command=lambda x: self.button_cmd(c=18),
                     backgroundColor=(0.7, 0.7, 1),
                     parent=color_column)
         cmds.button(label='B_Green',
-                    command=lambda x: cp.color_picker(color=19),
+                    command=lambda x: self.button_cmd(c=19),
                     backgroundColor=(0.7, 1, 0.7),
                     parent=color_column)
         cmds.button(label='Peach',
-                    command=lambda x: cp.color_picker(color=20),
+                    command=lambda x: self.button_cmd(c=20),
                     backgroundColor=(1, 0.8, 1),
                     parent=color_column)
         cmds.button(label='Tan',
-                    command=lambda x: cp.color_picker(color=21),
+                    command=lambda x: self.button_cmd(c=21),
                     backgroundColor=(1, 0.9, 0.9),
                     parent=color_column)
         cmds.button(label='L_Yellow',
-                    command=lambda x: cp.color_picker(color=22),
+                    command=lambda x: self.button_cmd(c=22),
                     backgroundColor=(1, 0.9, 0.3),
                     parent=color_column)
         cmds.button(label='Forest',
-                    command=lambda x: cp.color_picker(color=23),
+                    command=lambda x: self.button_cmd(c=23),
                     backgroundColor=(0, 0.3, 0),
                     parent=color_column)
         cmds.button(label='Brown',
-                    command=lambda x: cp.color_picker(color=24),
+                    command=lambda x: self.button_cmd(c=24),
                     backgroundColor=(0.6, 0.4, 0),
                     parent=color_column)
         cmds.button(label='M_Yellow',
-                    command=lambda x: cp.color_picker(color=25),
+                    command=lambda x: self.button_cmd(c=25),
                     backgroundColor=(0.7, 0.6, 0.2),
                     parent=color_column)
         cmds.button(label='M_Green',
-                    command=lambda x: cp.color_picker(color=26),
+                    command=lambda x: self.button_cmd(c=26),
                     backgroundColor=(0.4, 0.4, 0),
                     parent=color_column)
         cmds.button(label='M_Blue',
-                    command=lambda x: cp.color_picker(color=27),
+                    command=lambda x: self.button_cmd(c=27),
                     backgroundColor=(0.2, 0.3, 0.5),
                     parent=color_column)
         cmds.button(label='P_Sky Blue',
-                    command=lambda x: cp.color_picker(color=28),
+                    command=lambda x: self.button_cmd(c=28),
                     backgroundColor=(0.8, 0.8, 1),
                     parent=color_column)
         cmds.button(label='P_Blue',
-                    command=lambda x: cp.color_picker(color=29),
+                    command=lambda x: self.button_cmd(c=29),
                     backgroundColor=(0.5, 0.5, 1),
                     parent=color_column)
         cmds.button(label='Purple',
-                    command=lambda x: cp.color_picker(color=30),
+                    command=lambda x: self.button_cmd(c=30),
                     backgroundColor=(0.7, 0.3, 0.7),
                     parent=color_column)
         cmds.button(label='Magenta',
-                    command=lambda x: cp.color_picker(color=31),
+                    command=lambda x: self.button_cmd(c=31),
                     backgroundColor=(0.4, 0, 0.4),
                     parent=color_column)
+
+    def button_cmd(self, c):
+        import importlib
+        importlib.reload(cp)
+        importlib.reload(cc)
+        cp.color_picker(color=c)
 
     def show_window(self):
         if cmds.window(self.window, exists=True):
