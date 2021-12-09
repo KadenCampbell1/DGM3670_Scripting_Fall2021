@@ -1,9 +1,9 @@
 import maya.cmds as cmds
 from CreateNullParent import create_null_parent
-from ColorPicker import color_picker
+# from ColorPicker import color_picker
 
 
-def create_control(color):
+def create_control():
     """Creates circle control with selected object(s) orientation
 
     Control created at each selected objects position and orientation.
@@ -13,13 +13,13 @@ def create_control(color):
     create_control() will call color_picker().
 
     arguments:
-    color -- type string or int
+    None
     """
 
     sels = cmds.ls(sl=True)
     name = None
     location = None
-    temp_lyst = []
+    # temp_lyst = []
     parent_lyst = []
 
     if not sels:
@@ -27,7 +27,7 @@ def create_control(color):
         name = "Root_Ctrl"
         location = (0, 0, 0)
         curve = cmds.circle(c=location, n=name, normal=(0, 1, 0))
-        temp_lyst.append(curve)
+        # temp_lyst.append(curve)
         parent_lyst.append(curve[0])
 
     for sel in sels:
@@ -51,11 +51,11 @@ def create_control(color):
         cmds.xform(curve, translation=location)
 
         # appends curve to a temp_lyst for use in color_picker()
-        temp_lyst.append(curve)
+        # temp_lyst.append(curve)
         # appends curve to a parent_lyst for use in create_null_parent()
         parent_lyst.append(curve[0])
 
     # calls color_picker with input color
-    color_picker(temp_lyst, color)
+    # color_picker(temp_lyst, color)
     # calls create_null_parent with parent_lyst
     create_null_parent(parent_lyst)

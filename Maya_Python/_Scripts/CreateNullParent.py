@@ -52,5 +52,3 @@ def create_null_parent(sels=None):
 
         # places sel in child relation to null object
         cmds.parent(sel, null_object)
-
-create_null_parent()
